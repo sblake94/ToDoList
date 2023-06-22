@@ -1,5 +1,6 @@
 ﻿using ApplicationLayer.ServiceAbstractions;
 using ApplicationLayer.ViewModels;
+using DomainLayer.Models.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,15 +10,15 @@ namespace Infrastructure.ServiceImplementations
         : ServiceBase<DatabaseDataAccess>
         , IDatabaseDataAccessService
     {
-        async Task<IEnumerable<TodoTaskViewModel>> IDatabaseDataAccessService.GetTodoTasksAsync()
+        async Task<Result<IEnumerable<TodoTaskViewModel>>> IDatabaseDataAccessService.GetTodoTasksAsync()
         {
             List<TodoTaskViewModel> result = new List<TodoTaskViewModel>();
 
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 5; i++)
             {
-                var task = new DomainLayer.Models.TodoTask(
+                var task = new DomainLayer.Models.TodoTaskModel(
                     title: $"Task {i}",
-                    description: $"Description {i}",
+                    description: $"Description {i}. We can put a description of anything here.",
                     dueDate: System.DateTime.Now.AddDays(1));
 
                 var taskViewModel = new TodoTaskViewModel();
@@ -26,7 +27,7 @@ namespace Infrastructure.ServiceImplementations
                 result.Add(taskViewModel);
             }
 
-            return result;
+            return new Success<IEnumerable<TodoTaskViewModel>>(result);
         }
     }
 }

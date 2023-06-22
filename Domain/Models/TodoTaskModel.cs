@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 
 namespace DomainLayer.Models
 {
-    public class TodoTask
+    public class TodoTaskModel
     {
         public Guid Id = Guid.NewGuid();
 
@@ -19,22 +21,26 @@ namespace DomainLayer.Models
                 _title = value;
             }
         }
+
         public string Description { get; private set; }
         public DateTime DueDate { get; private set; }
         public DateTime LastModifiedDate { get; private set; }
         public DateTime CreationDate { get; }
 
-        public DateTime? CompletionDate { get; private set; }
-        public bool IsComplete { get; set; }
+        public IEnumerable<TodoTaskModel> BlockingTasks { get; private set; }
+        public IEnumerable<TodoTaskModel> SubTasks { get; private set; }
 
-        public TodoTask(string title, string description, DateTime dueDate)
+        public DateTime? CompletionDate { get; private set; }
+        public eCompletionState CompletionState { get; set; }
+
+        public TodoTaskModel(string title, string description, DateTime dueDate)
         {
             Title = title;
             Description = description;
             DueDate = dueDate;
             CreationDate = DateTime.Now;
 
-            IsComplete = false;
+            CompletionState = eCompletionState.Incomplete;
             CompletionDate = null;
         }
 
@@ -58,14 +64,30 @@ namespace DomainLayer.Models
 
         public void MarkAsComplete()
         {
-            IsComplete = true;
+            CompletionState = eCompletionState.Complete;
             CompletionDate = DateTime.Now;
         }
 
         public void MarkAsIncomplete()
         {
-            IsComplete = false;
+            CompletionState = eCompletionState.Incomplete;
             CompletionDate = null;
+        }
+
+        public void AddBlockingTask(TodoTaskModel blockingTask)
+        {
+            (BlockingTasks as List<TodoTaskModel>).Add(blockingTask);
+        }
+
+        public void AddSubTask(TodoTaskModel subTask)
+        {
+            (SubTasks as List<TodoTaskModel>).Add(subTask);
+        }
+
+        public enum eCompletionState
+        {
+            Complete,
+            Incomplete
         }
     }
 }

@@ -6,11 +6,8 @@
 			 xmlns:vm="clr-namespace:ApplicationLayer.ViewModels;assembly=ApplicationLayer"
              xmlns:local="clr-namespace:PresentationLayer_WPF.Views"
              mc:Ignorable="d">
-	<UserControl.DataContext>
-		<vm:TodoTaskViewModel/>
-	</UserControl.DataContext>
 
-		<UserControl.Resources>
+	<UserControl.Resources>
 		<Style x:Key="TitleText" TargetType="TextBlock">
 			<Setter Property="Padding" Value="5"/>
 			<Setter Property="FontSize" Value="18"/>
@@ -36,97 +33,151 @@
 			<Setter	Property="FontWeight" Value="Regular"/>
 		</Style>
 
-		<Style x:Key="CustomCheckBoxStyle" TargetType="CheckBox">
+		<Style x:Key="CustomButtonStyle" TargetType="Button">
+			<Setter Property="Width" Value="auto"/>
+			<Setter Property="Height" Value="auto"/>
 			<Setter Property="Template">
 				<Setter.Value>
-					<ControlTemplate TargetType="CheckBox">
-						<Grid Background="{TemplateBinding Background}">
-							<Border x:Name="Border"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="0"
-									Width="20"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="0">
-								<Grid>
-									<ContentPresenter x:Name="ContentPresenter"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"
-                                                      Margin="5,0,0,0"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
-								</Grid>
-							</Border>
-							<Border x:Name="BrightenerBorder" 
-									Width="20" 
-									BorderBrush="Transparent"
-									BorderThickness="0">
-								<Grid>
-									<ContentPresenter x:Name="BrightenerContentPresenter"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"
-                                                      Margin="5,0,0,0"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
-								</Grid>
-							</Border>
-						</Grid>
+					<ControlTemplate TargetType="Button">
+						<Border x:Name="MainButtonBorder" 
+								Background="#444444" 
+								CornerRadius="7" 
+								Margin="3">
+							<Grid>
+								<Border x:Name="BackgroundBorder" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" CornerRadius="7" >
+									<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+								</Border>
+								<Border x:Name="MouseoverIndicator" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" CornerRadius="7">
+									<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+								</Border>
+								<Label x:Name="ButtonContent" Content="{Binding Content}" Foreground="White" Background="Transparent" Margin="10">
+									
+								</Label>
+							</Grid>
+						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="True">
-								<Setter TargetName="Border" Property="Background" Value="Green" />
-							</Trigger>
-							<Trigger Property="IsChecked" Value="False">
-								<Setter TargetName="Border" Property="Background" Value="Red"/>
-							</Trigger>
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter TargetName="BrightenerBorder" Property="Background" Value="#50ffffff" />
+								<Setter TargetName="MouseoverIndicator" Property="Visibility" Value="Visible"/>
 							</Trigger>
 							<Trigger Property="IsMouseOver" Value="False">
-								<Setter TargetName="BrightenerBorder" Property="Background" Value="Transparent"/>
+								<Setter TargetName="MouseoverIndicator" Property="Visibility" Value="Hidden"/>
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
 		</Style>
+		
+		<Style x:Key="CustomCheckButtonStyle" TargetType="Button">
+			<Setter Property="Width" Value="25"/>
+			<Setter Property="Command" Value="{Binding CMD_ToggleCompletedState}"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<Border x:Name="BackgroundBorder" Background="Transparent" BorderBrush="Black" BorderThickness="0" CornerRadius="7,0,0,7">
+								<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							</Border>
+							<Border x:Name="MouseoverIndicator" Background="#55FFFFFF" BorderBrush="Transparent" BorderThickness="0" CornerRadius="7,0,0,7">
+								<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							</Border>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<DataTrigger Binding="{Binding TaskCompletionState}" Value="True">
+								<Setter TargetName="BackgroundBorder" Property="Background" Value="#00C853"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding TaskCompletionState}" Value="False">
+								<Setter TargetName="BackgroundBorder" Property="Background" Value="#B71C1C"/>
+							</DataTrigger>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter TargetName="MouseoverIndicator" Property="Visibility" Value="Visible"/>
+							</Trigger>
+							<Trigger Property="IsMouseOver" Value="False">
+								<Setter TargetName="MouseoverIndicator" Property="Visibility" Value="Hidden"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="MaskStyle" TargetType="Rectangle">
+			<Setter Property="Fill">
+				<Setter.Value>
+					<VisualBrush Stretch="None" Visual="{Binding ElementName=ContentContainer}" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		
 	</UserControl.Resources>
 
-	<Grid Margin="5"
-		  MinWidth="300"
-		  HorizontalAlignment="Stretch"
-		  Background="#333333">
+	<Border CornerRadius="7" 
+			Background="#333333" 
+			BorderBrush="Transparent" 
+			BorderThickness="0" 
+			Margin="5">
+		<Grid MinWidth="300"
+			  HorizontalAlignment="Stretch">
 
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="auto" MinWidth="150"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="auto"/>
-		</Grid.ColumnDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="auto" MinWidth="150"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="auto"/>
+			</Grid.ColumnDefinitions>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="auto"/>
-		</Grid.RowDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
 
-		<CheckBox Grid.RowSpan="2"
-				  IsChecked="{Binding DataModel.IsComplete}"
-				  VerticalContentAlignment="Center"
-				  Style="{DynamicResource CustomCheckBoxStyle}"/>
+			<Button Grid.RowSpan="2"
+						Command="{Binding CMD_ToggleCompletedState}"
+						VerticalContentAlignment="Center"
+						Margin="0,0,7,0"
+						Style="{DynamicResource CustomCheckButtonStyle}"/>
 
-		<StackPanel Grid.Column="1" 
-					Grid.ColumnSpan="2" 
-					Width="auto">
-			
-			<TextBlock Style="{StaticResource TitleText}" 
-					   Text="{Binding DataModel.Title}"/>
-			
-			<TextBlock Style="{StaticResource Description}" 
-					   Text="{Binding DataModel.Description}"/>
-		</StackPanel>
+			<StackPanel Grid.Column="1" 
+						Grid.ColumnSpan="2" 
+						Width="auto">
 
-		<TextBlock Style="{StaticResource DueDate}" 
-				   Grid.Column="3"
-				   Text="{Binding DataModel.DueDate}"/>
+				<TextBlock Style="{StaticResource TitleText}" 
+							Text="{Binding DataModel.Title}"/>
 
-	</Grid>
+				<TextBlock Style="{StaticResource Description}" 
+							Text="{Binding DataModel.Description}"/>
+			</StackPanel>
+
+			<TextBlock Style="{StaticResource DueDate}" 
+					   Grid.Column="3"
+					   TextAlignment="Right"
+					   Text="{Binding DataModel.DueDate}"/>
+
+			<StackPanel Grid.Row="0"
+						Grid.Column="3"
+						Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Bottom">
+
+				<Button Command="{Binding CMD_Edit}"
+						Style="{DynamicResource CustomButtonStyle}"
+						Background="#00897B"
+						Foreground="White"
+						Content="✏️"/>
+
+				<!--<Button Command="{Binding CMD_UpdateDueDate}"
+						Style="{DynamicResource CustomButtonStyle}"
+						Background="#7B1FA2"
+						Foreground="White"
+						Content="📆"/>-->
+
+				<Button Command="{Binding CMD_Delete}"
+						Style="{DynamicResource CustomButtonStyle}"
+						Background="#B71C1C"
+						Foreground="White"
+						Content="🗑️"/>
+			</StackPanel>
+		</Grid>
+	</Border>
 </UserControl>

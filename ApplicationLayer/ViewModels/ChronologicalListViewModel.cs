@@ -20,30 +20,16 @@ namespace ApplicationLayer.ViewModels
         {
             _databaseDataAccessService = databaseDataAccessService;
             TodoTasks = new ObservableCollection<TodoTaskViewModel>();
-
-
-            for(int i = 0; i < 100; i++)
-            {
-                var task = new DomainLayer.Models.TodoTask(
-                        title: $"Task {i}",
-                        description: $"Description {i}",
-                        dueDate: DateTime.Now.AddDays(1));
-
-                var taskViewModel = new TodoTaskViewModel();
-                taskViewModel.SetDataModel(task);
-
-                TodoTasks.Add(taskViewModel);
-            }
         }
 
         public async Task LoadDataAsync()
         {
-            // DataLoading Logic here
-            var result = await _databaseDataAccessService.GetTodoTasksAsync();
+            var serviceRequestResult = await _databaseDataAccessService.GetTodoTasksAsync();
+            var taskViewModels = serviceRequestResult.Value;
 
             TodoTasks.Clear();
 
-            foreach (var item in result)
+            foreach (var item in taskViewModels)
                 TodoTasks.Add(item);
         }
     }

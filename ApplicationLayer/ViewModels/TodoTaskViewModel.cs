@@ -1,7 +1,10 @@
-﻿using DomainLayer.Models;
+﻿using CommunityToolkit.Mvvm.Input;
+using DomainLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Input;
 
 namespace ApplicationLayer.ViewModels
 {
@@ -9,8 +12,9 @@ namespace ApplicationLayer.ViewModels
     {
         static List<TodoTaskViewModel> instances = new List<TodoTaskViewModel>();
 
-        private TodoTask _dataModel;
-        public TodoTask DataModel { 
+
+        private TodoTaskModel _dataModel;
+        public TodoTaskModel DataModel { 
             get { return _dataModel; }
             set
             {
@@ -19,12 +23,32 @@ namespace ApplicationLayer.ViewModels
             }
         }
 
+        public bool TaskCompletionState 
+        {
+            get
+            {
+                switch (DataModel.CompletionState)
+                {
+                    case TodoTaskModel.eCompletionState.Complete:
+                        return true;
+                    case TodoTaskModel.eCompletionState.Incomplete:
+                        return false;
+                    default:
+                        return false;
+                }
+            }
+        }
+
+        public ICommand CMD_ToggleCompletedState { get; }
+
         public TodoTaskViewModel()
         {
             instances.Add(this);
+
+            CMD_ToggleCompletedState = new RelayCommand(ToggleCompletedState);
         }
 
-        public void SetDataModel(TodoTask dataModel)
+        public void SetDataModel(TodoTaskModel dataModel)
         {
             DataModel = dataModel;
         }
@@ -36,7 +60,14 @@ namespace ApplicationLayer.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void MarkAsComplete(object sender, EventArgs e) => DataModel.MarkAsComplete();
-        public void MarkAsIncomplete(object sender, EventArgs e) => DataModel.MarkAsIncomplete();
+        private void ToggleCompletedState() 
+        {
+            if(TaskCompletionState != true)
+                DataModel.MarkAsComplete();
+            else
+                DataModel.MarkAsIncomplete();
+
+            OnPropertyChanged(nameof(TaskCompletionState));
+        }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using ApplicationLayer.ViewModels;
-using System;
+using DomainLayer.Models.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationLayer.ServiceAbstractions
 {
     public interface IDatabaseDataAccessService
     {
-        Task<IEnumerable<TodoTaskViewModel>> GetTodoTasksAsync();
+        Task<Result<IEnumerable<TodoTaskViewModel>>> GetTodoTasksAsync();
     }
 }
