@@ -1,4 +1,4 @@
-﻿namespace Library.Services
+﻿namespace Infrastructure.ServiceImplementations
 {
     public class ServiceBase<T>
     {

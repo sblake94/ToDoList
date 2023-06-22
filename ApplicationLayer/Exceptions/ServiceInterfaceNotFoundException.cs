@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Exceptions
+namespace ApplicationLayer.Exceptions
 {
     public class ServiceInterfaceNotFoundException : Exception
     {

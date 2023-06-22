@@ -4,31 +4,28 @@ using System;
 using System.Net.Security;
 using System.ServiceProcess;
 using System.Windows;
-using WpfUI.Common;
-using WpfUI.Views;
+using PresentationLayer_WPF.Common;
+using PresentationLayer_WPF.Views;
 
-namespace WpfUI
+namespace PresentationLayer_WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        private IServiceProvider _serviceProvider;
+        IServiceProvider serviceProvider;
         public App()
         {
-            _serviceProvider = ServiceConfigurator.Configure();
+            serviceProvider = ServiceConfigurator.Configure();
+            Ioc.Default.ConfigureServices(serviceProvider);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            DisplayMainWindow();
-        }
 
-        private void DisplayMainWindow()
-        {
-            MainWindow = _serviceProvider.GetRequiredService<MainView>();
+            MainWindow = new MainView();
             MainWindow.Show();
         }
     }
