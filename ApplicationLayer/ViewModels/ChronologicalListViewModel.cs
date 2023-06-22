@@ -15,6 +15,8 @@ namespace ApplicationLayer.ViewModels
     {
         private readonly IDatabaseDataAccessService _databaseDataAccessService;
         public ObservableCollection<TodoTaskViewModel> TodoTasks { get; set; }
+        private readonly string _title = "Todo List";
+        public string Title { get { return _title; } }
 
         public ChronologicalListViewModel(IDatabaseDataAccessService databaseDataAccessService)
         {

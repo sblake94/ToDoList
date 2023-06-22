@@ -9,7 +9,7 @@
 
 	<UserControl.Resources>
 		<Style x:Key="TitleText" TargetType="TextBlock">
-			<Setter Property="Padding" Value="5"/>
+			<Setter Property="Padding" Value="5,10,5,5"/>
 			<Setter Property="FontSize" Value="18"/>
 			<Setter Property="FontFamily" Value="Montserrat"/>
 			<Setter Property="Foreground" Value="White"/>
@@ -17,7 +17,7 @@
 		</Style>
 
 		<Style x:Key="Description" TargetType="TextBlock">
-			<Setter Property="Padding" Value="5"/>
+			<Setter Property="Padding" Value="5,5,5,10"/>
 			<Setter Property="TextWrapping" Value="Wrap"/>
 			<Setter Property="FontSize" Value="14"/>
 			<Setter Property="FontFamily" Value="Montserrat"/>

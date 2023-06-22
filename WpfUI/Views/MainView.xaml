@@ -21,14 +21,6 @@
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		
-		<Label Content="{Binding Title}" 
-			   Grid.Row="0"
-			   FontFamily="Montserrat"
-			   FontSize="24"
-			   FontWeight="Bold"
-			   Foreground="#DDDDDD">
-		</Label>
 
 		<local:ChronologicalListView 
 			Grid.Row="1"/>
