@@ -15,13 +15,15 @@ namespace PresentationLayer_WPF.Views
     {
         ChronologicalListViewModel ViewModel { get; set; }
 
+        
+
         public ChronologicalListView()
         {
             InitializeComponent();
 
             this.Visibility = Visibility.Hidden;
 
-            DataContext = ViewModel = new ChronologicalListViewModel(Ioc.Default.GetRequiredService<IDatabaseDataAccessService>());
+            DataContext = ViewModel = new ChronologicalListViewModel();
             LoadData();
         }
 
@@ -39,7 +41,11 @@ namespace PresentationLayer_WPF.Views
             {
                 this.Visibility = Visibility.Visible;
             }
-        }   
+        }
 
+        private void Button_AddNewTodoTask(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Button_AddNewTodoTask(sender, e);
+        }
     }
 }

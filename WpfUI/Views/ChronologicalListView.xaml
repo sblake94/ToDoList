@@ -6,6 +6,9 @@
 			 xmlns:vm="clr-namespace:ApplicationLayer.ViewModels;assembly=ApplicationLayer"
              xmlns:local="clr-namespace:PresentationLayer_WPF.Views"
              mc:Ignorable="d">
+	<UserControl.DataContext>
+		<vm:ChronologicalListViewModel/>
+	</UserControl.DataContext>
 	<UserControl.Resources>
 		<ControlTemplate TargetType="{x:Type ScrollViewer}" x:Key="ScrollViewerControlTemplate">
 			<Grid x:Name="Grid" Background="{TemplateBinding Background}">
@@ -114,25 +117,28 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
+
 		<Label Content="{Binding Title}" 
 			   Grid.Row="0"
 			   FontFamily="Montserrat"
 			   FontSize="32"
 			   FontWeight="Bold"
-			   Foreground="#DDDDDD">
-		</Label>
+			   Margin="20,20,20,0"
+			   Foreground="#DDDDDD"/>
+
 		<Button Content="+"
 				FontSize="18"
 				FontFamily="Montserrat"
 				FontWeight="ExtraBlack"
+				Margin="20,20,20,0"
 				HorizontalAlignment="Right"
 				Style="{DynamicResource CustomButtonStyle}"
-				Command="{Binding CMD_AddNewTodoTask}"
+				Click="Button_AddNewTodoTask"
 				Foreground="White"
 				Background="Orange"/>
 
 		<ScrollViewer MinHeight="350" 
-					  Margin="0,10,0,0"
+					  Margin="20,10,20,20"
 					  HorizontalAlignment="Stretch"
 					  VerticalScrollBarVisibility="Auto"
 					  HorizontalScrollBarVisibility="Disabled"
@@ -185,5 +191,9 @@
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</ScrollViewer>
+		<local:AddTodoTaskView x:Name="OVERLAY_AddTodoTaskView" 
+							   Grid.RowSpan="2" 
+							   Visibility="{Binding AddNewTodoTaskViewIsVisible}"/>
+		
 	</Grid>
 </UserControl>
