@@ -6,8 +6,7 @@
 			 xmlns:vm="clr-namespace:ApplicationLayer.ViewModels;assembly=ApplicationLayer"
              xmlns:local="clr-namespace:PresentationLayer_WPF.Views"
              mc:Ignorable="d">
-	
-		
+
 	<UserControl.DataContext>
 		<vm:AddTodoTaskViewModel/>
 	</UserControl.DataContext>
@@ -98,20 +97,13 @@
 						  Opacity="1"
 						  BlurRadius="50"/>
 	</UserControl.Resources>
-		
+
 	<Grid Background="#44000000" 
 		  HorizontalAlignment="Stretch" 
 		  VerticalAlignment="Stretch">
 		<Grid.Resources>
 			<Style TargetType="Grid">
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding Visible}" Value="True">
-						<Setter Property="Visibility" Value="Visible"/>
-					</DataTrigger>
-					<DataTrigger Binding="{Binding Visible}" Value="False">
-						<Setter Property="Visibility" Value="Collapsed"/>
-					</DataTrigger>
-				</Style.Triggers>
+
 			</Style>
 		</Grid.Resources>
 		<Border Width="300"
@@ -122,18 +114,7 @@
 				Effect="{DynamicResource DropShadow}"
 				CornerRadius="10"
 				Padding="15">
-			<Border.Resources>
-				<Style TargetType="{x:Type Border}">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding Visible}" Value="True">
-							<Setter Property="Visibility" Value="Visible"/>
-						</DataTrigger>
-						<DataTrigger Binding="{Binding Visible}" Value="False">
-							<Setter Property="Visibility" Value="Collapsed"/>
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</Border.Resources>
+			
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="auto"/>
@@ -157,7 +138,7 @@
 								<RowDefinition Height="auto"/>
 								<RowDefinition Height="auto"/>
 							</Grid.RowDefinitions>
-					
+
 							<Label Content="Title" Style="{DynamicResource DefaultLabel}"/>
 
 							<TextBox x:Name="TXTBX_Title"
@@ -173,7 +154,7 @@
 								<RowDefinition Height="auto"/>
 								<RowDefinition Height="*"/>
 							</Grid.RowDefinitions>
-					
+
 							<Label Content="Description" Style="{DynamicResource DefaultLabel}"/>
 
 							<TextBox x:Name="TXTBX_Description"
@@ -217,10 +198,10 @@
 								</ComboBox>
 							</StackPanel>
 						</StackPanel>
-						
+
 					</StackPanel>
 				</ScrollViewer>
-				
+
 				<StackPanel Orientation="Horizontal" 
 							Grid.Row="2"
 							Margin="5" 
@@ -232,8 +213,8 @@
 
 					<Button Content="Cancel"
 							Style="{DynamicResource CustomButtonStyle}"
-							Command="{Binding CMD_Cancel}"/>
-					
+							Click="BTN_Cancel"/>
+
 				</StackPanel>
 			</Grid>
 		</Border>

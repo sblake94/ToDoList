@@ -14,18 +14,6 @@ namespace ApplicationLayer.ViewModels
     {
         private readonly IDatabaseDataAccessService _databaseDataAccessService;
         public TodoTaskModel ModelUnderConstruction { get; set; }
-
-        private bool _visible = true;
-        public bool Visible 
-        { 
-            get { return _visible; }
-            set
-            {
-                _visible = value;
-                OnPropertyChanged(nameof(Visible));
-            }
-        }
-
         public ICommand CMD_Save { get; set; }
         public ICommand CMD_Cancel { get; set; }
 
@@ -54,7 +42,7 @@ namespace ApplicationLayer.ViewModels
 
         private void Cancel()
         {
-            Visible = false;
+            
         }
 
         public void SubmitDescriptionText(string text)

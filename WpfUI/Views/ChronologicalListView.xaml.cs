@@ -45,7 +45,7 @@ namespace PresentationLayer_WPF.Views
 
         private void Button_AddNewTodoTask(object sender, RoutedEventArgs e)
         {
-            ViewModel.Button_AddNewTodoTask(sender, e);
+            OVERLAY_AddTodoTaskView.Visibility = Visibility.Visible;
         }
     }
 }

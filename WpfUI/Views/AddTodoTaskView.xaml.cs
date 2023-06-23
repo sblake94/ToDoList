@@ -55,5 +55,10 @@ namespace PresentationLayer_WPF.Views
         {
             throw new NotImplementedException();
         }
+
+        private void BTN_Cancel(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Collapsed;
+        }
     }
 }

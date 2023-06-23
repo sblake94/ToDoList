@@ -192,8 +192,7 @@
 			</ItemsControl>
 		</ScrollViewer>
 		<local:AddTodoTaskView x:Name="OVERLAY_AddTodoTaskView" 
-							   Grid.RowSpan="2" 
-							   Visibility="{Binding AddNewTodoTaskViewIsVisible}"/>
+							   Grid.RowSpan="2"/>
 		
 	</Grid>
 </UserControl>
